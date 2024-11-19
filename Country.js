@@ -9,7 +9,7 @@ const { CTModule } = NativeModules;
 
 const Country = () => {
   const [selectedValue, setSelectedValue] = useState('');
-  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
   // Dropdown values
@@ -17,37 +17,28 @@ const Country = () => {
     { label: 'UAE', value: 'UAE' },
     { label: 'KSA', value: 'KSA' },
   ];
-
-  // Check if a country is already selected (added improved logic to handle initial screen rendering)
+  
   useEffect(() => {
     const checkCountry = async () => {
       const storedCountry = await AsyncStorage.getItem('selectedCountry');
-      if (storedCountry) {
-        // If country is already selected, initialize CleverTap and navigate to Login
-        initializeCleverTap(storedCountry);
+      if (storedCountry) {initializeCleverTap(storedCountry);
         navigation.replace('Login');
-      } else {
-        // If no country is selected, stop the loading state
-        setIsLoading(false);
+      } else {setIsLoading(false);
       }
     };
-
-    // Call checkCountry immediately after the component mounts
     checkCountry();
-  }, [navigation]); // Ensure the navigation hook doesn't change on re-renders
+  }, [navigation]); 
 
-  // Save selected country and navigate to Login
   const handleSelection = async (value) => {
     if (value) {
       setSelectedValue(value);
-      await AsyncStorage.setItem('selectedCountry', value); // Persist the selected country
-      console.log('Selected Value:', value); // Debugging log
-      initializeCleverTap(value); // Initialize CleverTap with selected country
-      navigation.replace('Login'); // Immediately navigate to Login
+      await AsyncStorage.setItem('selectedCountry', value); 
+      console.log('Selected Value:', value);
+      initializeCleverTap(value); 
+      navigation.replace('Login');
     }
   };
 
-  // Initialize CleverTap with the selected country
   const initializeCleverTap = (country) => {
     if (CTModule && CTModule.initCleverTap) {
       CTModule.initCleverTap(country);
@@ -59,7 +50,6 @@ const Country = () => {
   };
 
   if (isLoading) {
-    // Display a loading spinner while checking country
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#1e88e5" />
@@ -88,10 +78,10 @@ const Country = () => {
       <TouchableOpacity
         style={[
           styles.button,
-          !selectedValue && { backgroundColor: '#b0bec5' }, // Disable button if no country selected
+          !selectedValue && { backgroundColor: '#b0bec5' },
         ]}
-        onPress={() => handleSelection(selectedValue)} // Trigger selection when the button is pressed
-        disabled={!selectedValue} // Disable if no selection
+        onPress={() => handleSelection(selectedValue)} 
+        disabled={!selectedValue} 
       >
         <Text style={styles.buttonText}>GO TO LOGIN</Text>
       </TouchableOpacity>
@@ -99,25 +89,25 @@ const Country = () => {
   );
 };
 
-// Styling for the picker and other elements
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#e3f2fd', // Soft background
+    backgroundColor: '#e3f2fd', 
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1e88e5', // Title color
+    color: '#1e88e5', 
     marginBottom: 20,
   },
   selectionText: {
     fontSize: 18,
     marginVertical: 20,
-    color: '#333', // Dark text color
+    color: '#333', 
   },
   button: {
     backgroundColor: '#1e88e5',
@@ -135,7 +125,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e3f2fd', // Same background color as the main screen
+    backgroundColor: '#e3f2fd', 
   },
 });
 
@@ -147,7 +137,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderRadius: 10,
     width: '100%',
     borderWidth: 1,
-    borderColor: '#1e88e5', // Border color to match the button
+    borderColor: '#1e88e5', 
     fontSize: 16,
     color: '#333',
   },
