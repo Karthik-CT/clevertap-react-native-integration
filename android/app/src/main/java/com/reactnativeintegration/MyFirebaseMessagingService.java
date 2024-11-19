@@ -43,6 +43,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
     @Override
     public void onNewToken(String token) {
-        CleverTapAPI.getDefaultInstance(this).pushFcmRegistrationId(token,true);
+        // CleverTapAPI.getDefaultInstance(this).pushFcmRegistrationId(token,true);
     }
 }

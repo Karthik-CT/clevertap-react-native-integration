@@ -31,8 +31,13 @@ import org.json.JSONObject;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import com.clevertap.react.CleverTapApplication;
+import com.clevertap.android.sdk.CleverTapAPI;
+import com.clevertap.android.sdk.CleverTapInstanceConfig;
+import android.content.SharedPreferences;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReactApplicationContext;
 
-public class MainApplication extends CleverTapApplication implements ActivityLifecycleCallbacks, ReactApplication {
+public class MainApplication extends Application implements ActivityLifecycleCallbacks, ReactApplication {
 
     private final ReactNativeHost mReactNativeHost =
             new ReactNativeHost(this) {

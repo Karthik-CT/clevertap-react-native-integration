@@ -3,6 +3,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".MainApplication"
@@ -39,12 +41,12 @@
             </intent-filter>
         </activity>
 
-        <meta-data
+        <!-- <meta-data
             android:name="CLEVERTAP_ACCOUNT_ID"
             android:value="TEST" />
         <meta-data
             android:name="CLEVERTAP_TOKEN"
-            android:value="TEST" />
+            android:value="TEST" /> -->
 
         <!-- <meta-data
             android:name="CLEVERTAP_ACCOUNT_ID"
@@ -80,21 +82,21 @@
           android:value="1"/> -->
 
 
-        <!-- <service
+        <service
               android:name="com.clevertap.android.sdk.pushnotification.fcm.FcmMessageListenerService"
               android:exported="true">
               <intent-filter>
                   <action android:name="com.google.firebase.MESSAGING_EVENT" />
               </intent-filter>
-          </service> -->
+          </service>
 
-        <service
+        <!-- <service
             android:name=".MyFirebaseMessagingService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
+        </service> -->
 
     </application>
 

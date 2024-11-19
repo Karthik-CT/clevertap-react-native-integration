@@ -18,17 +18,26 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableMap;
 import java.util.*;
 import com.facebook.react.bridge.*;
+import android.content.SharedPreferences;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.widget.Toast;
+import androidx.core.content.ContextCompat;
+import com.facebook.react.bridge.LifecycleEventListener;
+import java.util.Map;
 
-public class CTModule extends ReactContextBaseJavaModule {
-    Context context;
+public class CTModule extends ReactContextBaseJavaModule implements LifecycleEventListener  {
+    public static Context context;
 
     CTModule(ReactApplicationContext context) {
         super(context);
         this.context = context;
+        context.addLifecycleEventListener(this);
     }
 
     @ReactMethod
-    CleverTapAPI clevertapAdditionalInstance = null;
+    static CleverTapAPI clevertapAdditionalInstance = null;
     CleverTapInstanceConfig clevertapAdditionalInstanceConfig = null;
 
     @NonNull
@@ -40,6 +49,9 @@ public class CTModule extends ReactContextBaseJavaModule {
     @ReactMethod
     void initCleverTap(String country) {
         Log.d("CT", "I am from CTModule initCleverTap Method");
+        SharedPreferences sharedPreferences = context.getSharedPreferences("CTPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         if (Objects.equals(country, "KSA")) {
 
             clevertapAdditionalInstanceConfig = CleverTapInstanceConfig.createInstance(
@@ -53,6 +65,11 @@ public class CTModule extends ReactContextBaseJavaModule {
             clevertapAdditionalInstanceConfig.enablePersonalization(false);
 
             clevertapAdditionalInstance = CleverTapAPI.instanceWithConfig(getReactApplicationContext(), clevertapAdditionalInstanceConfig);
+            
+            // Store in SharedPreferences
+            editor.putString("clevertapAccountID", "TEST-W8W-6WR-846Z");
+            editor.putString("clevertapToken", "TEST-206-0b0");
+            editor.apply();
 
         } else if (Objects.equals(country, "UAE")) {
             clevertapAdditionalInstanceConfig = CleverTapInstanceConfig.createInstance(
@@ -66,9 +83,46 @@ public class CTModule extends ReactContextBaseJavaModule {
             clevertapAdditionalInstanceConfig.enablePersonalization(false);
 
             clevertapAdditionalInstance = CleverTapAPI.instanceWithConfig(getReactApplicationContext(), clevertapAdditionalInstanceConfig);
-
+   
+            // Store in SharedPreferences
+            editor.putString("clevertapAccountID", "TEST-RK4-66R-966Z");
+            editor.putString("clevertapToken", "TEST-266-432");
+            editor.apply();
         }
     }
+
+    @ReactMethod
+    public void promptForPushPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Activity currentActivity = getCurrentActivity();
+            if (currentActivity != null && clevertapAdditionalInstance != null) {
+                HashMap<String, Object> profileUpdate = new HashMap<String, Object>();
+                profileUpdate.put("MSG-push", true);
+                clevertapAdditionalInstance.pushProfile(profileUpdate);
+                clevertapAdditionalInstance.promptForPushPermission(true);
+            }
+        }
+    }
+
+    @Override
+    public void onHostResume() {
+        // Called when the application is resumed
+        Log.d("CT", "onHostResume triggered");
+        promptForPushPermission();
+    }
+
+    @Override
+    public void onHostPause() {
+        // Handle pause state if needed
+        Log.d("CT", "onHostPause triggered");
+    }
+
+    @Override
+    public void onHostDestroy() {
+        // Cleanup resources if needed
+        Log.d("CT", "onHostDestroy triggered");
+    }
+
 
     @ReactMethod
     public void raiseEvent(String eventName , ReadableMap props) {
@@ -81,24 +135,23 @@ public class CTModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    CleverTapAPI returnCTInstance() {
-        System.out.println("clevertapAdditionalInstance: "+clevertapAdditionalInstance.toString());
+    public static CleverTapAPI getCleverTapInstance() {
         return clevertapAdditionalInstance;
     }
 
     @ReactMethod
     void callOnUserLogin() {
         HashMap<String, Object> profileUpdate = new HashMap<String, Object>();
-        profileUpdate.put("Name", "React User 4");    // String
-        profileUpdate.put("Identity", "reactUser4");      // String or number
-        profileUpdate.put("Email", "reactuser4@test.com"); // Email address of the user
-        profileUpdate.put("Phone", "+14155551234");                 //String Array
+        profileUpdate.put("Name", "React User 4"); 
+        profileUpdate.put("Identity", "reactUser4"); 
+        profileUpdate.put("Email", "reactuser4@test.com");
+        profileUpdate.put("Phone", "+14155551234"); 
 
         clevertapAdditionalInstance.onUserLogin(profileUpdate);
     }
 
     @ReactMethod
-    public void resurrectApp(){
+    public static void resurrectApp(){
         Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
         if (launchIntent != null) {
             context.startActivity(launchIntent);
