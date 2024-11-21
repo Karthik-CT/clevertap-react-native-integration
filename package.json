@@ -20,6 +20,7 @@
     "@react-navigation/stack": "^6.2.1",
     "clevertap-react-native": "^2.2.1",
     "cocoapods": "*",
+    "core-js": "^3.39.0",
     "react": "17.0.2",
     "react-native": "0.67.3",
     "react-native-gesture-handler": "2.9.0",

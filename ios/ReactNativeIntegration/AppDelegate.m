@@ -7,8 +7,6 @@
 #import <clevertap-react-native/CleverTapReactManager.h>
 #import <React/RCTLinkingManager.h>
 #import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
-
-
 #import <CleverTap-iOS-SDK/CleverTapInstanceConfig.h>
 
 @implementation AppDelegate

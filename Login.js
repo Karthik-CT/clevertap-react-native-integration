@@ -13,9 +13,6 @@ const {CTModule} = NativeModules;
 
 const CleverTap = require('clevertap-react-native');
 
-CTModule.promptForPushPermission();
-CTModule.resurrectApp();
-
 const Login = ({navigation}) => {
   CleverTap.setDebugLevel(3);
   CleverTap.initializeInbox();
