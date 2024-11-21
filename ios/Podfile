@@ -25,6 +25,10 @@ pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
 pod 'RNScreens', :path => '../node_modules/react-native-screens/'
 
+pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context/'
+
+pod 'RNCPicker', :path => '../node_modules/@react-native-picker/picker/'
+
 #   target 'ReactNativeIntegrationTests' do
 #     inherit! :complete
 #     # Pods for testing
