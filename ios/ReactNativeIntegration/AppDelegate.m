@@ -8,6 +8,7 @@
 #import <React/RCTLinkingManager.h>
 #import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
 #import <CleverTap-iOS-SDK/CleverTapInstanceConfig.h>
+#import <React/RCTLog.h>
 
 @implementation AppDelegate
 
@@ -27,20 +28,9 @@
   
   [self registerForPush];
   // integrate CleverTap SDK using the autoIntegrate option
-  [CleverTap autoIntegrate];
-  [CleverTap setDebugLevel:CleverTapLogDebug];
-  [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
-  
-  //
-  //  // Config an additional instance
-  //  CleverTapInstanceConfig *ctConfig = [[CleverTapInstanceConfig alloc] initWithAccountId:@"TEST-W8W-6WR-846Z" accountToken:@"TEST-W8W-6WR-846Z"];
-  //  [ctConfig setLogLevel:CleverTapLogDebug];
-  //  [ctConfig setAnalyticsOnly:NO];
-  //  [ctConfig setEnablePersonalization:NO];
-  //
-  //  CleverTap *additionalCleverTapInstance = [CleverTap instanceWithConfig:ctConfig];
-  //  [additionalCleverTapInstance enableDeviceNetworkInfoReporting:YES];
-  //  [additionalCleverTapInstance notifyApplicationLaunchedWithOptions:nil];
+  //  [CleverTap autoIntegrate];
+  //  [CleverTap setDebugLevel:CleverTapLogDebug];
+  //  [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
@@ -73,8 +63,11 @@
 //Device Token
 -(void) application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
   NSLog(@"Device Token : %@",deviceToken);
-  
+  NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+  [prefs setObject:deviceToken forKey:@"APNSPushToken"];
+  [prefs synchronize];
 }
+
 -(void) application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
   NSLog(@"Error %@",error.description);
 }
@@ -108,6 +101,21 @@
 -(void) userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler{
   
   self.resp = response.notification.request.content.userInfo;
+  
+  //get the details stored in app groups
+  NSUserDefaults *mySharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
+  NSString *countryId = [mySharedDefaults stringForKey:@"countryId"];
+  NSString *cleverTapId = [mySharedDefaults stringForKey:@"AccountId"];
+  NSString *cleverTapToken = [mySharedDefaults stringForKey:@"AccountToken"];
+  NSString *email = [mySharedDefaults stringForKey:@"email"];
+  NSString *identity = [mySharedDefaults stringForKey:@"identity"];
+  NSLog(@"Account ID from App Delegate didReceive %@ %@", cleverTapId, cleverTapToken);
+  
+  // create the instance using the above details
+  CleverTapInstanceConfig *ctConfig = [[CleverTapInstanceConfig alloc] initWithAccountId:(NSString *)cleverTapId accountToken:(NSString *)cleverTapToken];
+  CleverTap *cleverTapAdditionalInstance = [CleverTap instanceWithConfig:ctConfig];
+  [cleverTapAdditionalInstance recordNotificationClickedEventWithData:response.notification.request.content.userInfo];
+
   completionHandler();
 }
 -(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{

@@ -11,15 +11,14 @@ import RNPickerSelect from 'react-native-picker-select';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeModules} from 'react-native';
-console.log(AsyncStorage);
-const {CTModule} = NativeModules;
+
+const {CTModule, CLTModule} = NativeModules;
 
 const Country = () => {
   const [selectedValue, setSelectedValue] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
-  // Dropdown values
   const pickerItems = [
     {label: 'UAE', value: 'UAE'},
     {label: 'KSA', value: 'KSA'},
@@ -27,39 +26,51 @@ const Country = () => {
 
   useEffect(() => {
     const checkCountry = async () => {
-      if (Platform.OS === 'android') {
-        // Platform-specific behavior for Android
+      try {
         const storedCountry = await AsyncStorage.getItem('selectedCountry');
         if (storedCountry) {
           initializeCleverTap(storedCountry);
           navigation.replace('Login');
-          return;
+        } else {
+          setIsLoading(false);
         }
+      } catch (error) {
+        console.error('Error fetching country:', error);
+        setIsLoading(false);
       }
-      // Normal behavior for iOS
-      setIsLoading(false);
     };
+
     checkCountry();
   }, [navigation]);
 
   const handleSelection = async value => {
-    if (value) {
+    if (!value) return;
+
+    try {
       setSelectedValue(value);
       await AsyncStorage.setItem('selectedCountry', value);
-      console.log('Selected Value:', value);
+
       initializeCleverTap(value);
       navigation.replace('Login');
+    } catch (error) {
+      console.error('Error in handleSelection:', error);
     }
   };
 
-  const initializeCleverTap = country => {
-    if (CTModule && CTModule.initCleverTap) {
-      CTModule.initCleverTap(country);
-      CTModule.resurrectApp();
-      console.log(`CleverTap initialized for country: ${country}`);
-    } else {
-      console.error('CleverTap initialization failed. Check CTModule setup.');
-    }
+  initializeCleverTap = country => {
+    try {
+      if (Platform.OS === 'android' && CTModule?.initCleverTap) {
+        CTModule.initCleverTap(country);
+        CTModule.resurrectApp();
+      } else if (Platform.OS === 'ios' && CLTModule) {
+        const config = {
+          UAE: {id: 'TEST-RK4-66R-966Z', token: 'TEST-266-432'},
+          KSA: {id: 'TEST-W8W-6WR-846Z', token: 'TEST-206-0b0'},
+        };
+        const {id, token} = config[country] || {};
+        CLTModule.initializeCleverTap(country.toLowerCase(), id, token);
+      }
+    } catch (error) {}
   };
 
   if (isLoading) {
@@ -73,23 +84,17 @@ const Country = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select Country</Text>
-
       <RNPickerSelect
-        onValueChange={value => handleSelection(value)}
+        onValueChange={handleSelection}
         items={pickerItems}
-        placeholder={{
-          label: 'Select Country...',
-          value: null,
-        }}
+        placeholder={{label: 'Select Country...', value: null}}
         style={pickerSelectStyles}
       />
-
       <Text style={styles.selectionText}>
         {selectedValue
           ? `You selected: ${selectedValue}`
           : 'No country selected'}
       </Text>
-
       <TouchableOpacity
         style={[styles.button, !selectedValue && {backgroundColor: '#b0bec5'}]}
         onPress={() => handleSelection(selectedValue)}

@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3FCA56CEE1CE3015D8D233FF /* libPods-ReactNativeIntegration-NotificationContentDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0805C4A172230C55A62523 /* libPods-ReactNativeIntegration-NotificationContentDemo.a */; };
+		4E0083162CEF8D7C004F9707 /* CLTModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0083152CEF8D7C004F9707 /* CLTModule.m */; };
 		4E0D791C2AE16E6A002F7CA3 /* CTNotificationService in Frameworks */ = {isa = PBXBuildFile; productRef = 4E0D791B2AE16E6A002F7CA3 /* CTNotificationService */; };
 		4E54906B2A867F6E00E59229 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54906A2A867F6E00E59229 /* NotificationService.swift */; };
 		4E54906F2A867F6E00E59229 /* NotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4E5490682A867F6E00E59229 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -102,6 +103,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ReactNativeIntegration/main.m; sourceTree = "<group>"; };
 		1A56BC5103413ABAB3F0E3A8 /* Pods-ReactNativeIntegration.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeIntegration.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeIntegration/Pods-ReactNativeIntegration.release.xcconfig"; sourceTree = "<group>"; };
 		3CBC0CDC73077B78951D5B55 /* Pods-ReactNativeIntegration-NotificationContentDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeIntegration-NotificationContentDemo.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeIntegration-NotificationContentDemo/Pods-ReactNativeIntegration-NotificationContentDemo.release.xcconfig"; sourceTree = "<group>"; };
+		4E0083152CEF8D7C004F9707 /* CLTModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLTModule.m; sourceTree = "<group>"; };
+		4E0083172CEF8D9E004F9707 /* CLTModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLTModule.h; sourceTree = "<group>"; };
 		4E0D79122AE16CDD002F7CA3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E0D79142AE16CE9002F7CA3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E0D79162AE16D11002F7CA3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +204,8 @@
 				4E370F6E28BE182300DCB78F /* ReactNativeIntegration.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				4E0083152CEF8D7C004F9707 /* CLTModule.m */,
+				4E0083172CEF8D9E004F9707 /* CLTModule.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -679,6 +684,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				4E0083162CEF8D7C004F9707 /* CLTModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
