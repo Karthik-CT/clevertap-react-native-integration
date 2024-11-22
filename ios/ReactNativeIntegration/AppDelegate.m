@@ -27,10 +27,6 @@
   }
   
   [self registerForPush];
-  // integrate CleverTap SDK using the autoIntegrate option
-  //  [CleverTap autoIntegrate];
-  //  [CleverTap setDebugLevel:CleverTapLogDebug];
-  //  [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
