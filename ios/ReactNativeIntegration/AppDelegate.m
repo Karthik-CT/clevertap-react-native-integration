@@ -111,7 +111,7 @@
   CleverTapInstanceConfig *ctConfig = [[CleverTapInstanceConfig alloc] initWithAccountId:(NSString *)cleverTapId accountToken:(NSString *)cleverTapToken];
   CleverTap *cleverTapAdditionalInstance = [CleverTap instanceWithConfig:ctConfig];
   [cleverTapAdditionalInstance recordNotificationClickedEventWithData:response.notification.request.content.userInfo];
-
+  
   completionHandler();
 }
 -(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
