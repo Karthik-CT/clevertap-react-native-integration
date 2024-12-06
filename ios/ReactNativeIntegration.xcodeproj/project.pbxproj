@@ -32,6 +32,7 @@
 		4E756B752A862AB2004FA7E2 /* double-conversion.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC782A65BAD5008C51DC /* double-conversion.xcframework */; };
 		4E756B762A862AB2004FA7E2 /* double-conversion.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC782A65BAD5008C51DC /* double-conversion.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4EB836382ADFEC6A008964E3 /* CleverTapSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4EB836372ADFEC6A008964E3 /* CleverTapSDK */; };
+		4EEA41452D01BE4300307146 /* CleverTapSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4EEA41442D01BE4300307146 /* CleverTapSDK */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		895AC7C084B2D891FBDC1AEC /* libPods-ReactNativeIntegration-ReactNativeIntegrationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71B63496D44934A82D768F /* libPods-ReactNativeIntegration-ReactNativeIntegrationTests.a */; };
 		8BC92B468D00E546556585F2 /* libPods-ReactNativeIntegration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AD83F7FA9964C8BB0FB346 /* libPods-ReactNativeIntegration.a */; };
@@ -148,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EEA41452D01BE4300307146 /* CleverTapSDK in Frameworks */,
 				4E756B6D2A86185B004FA7E2 /* OpenSSL.xcframework in Frameworks */,
 				4E756B702A8618A1004FA7E2 /* double-conversion.xcframework in Frameworks */,
 				8BC92B468D00E546556585F2 /* libPods-ReactNativeIntegration.a in Frameworks */,
@@ -1190,6 +1192,11 @@
 			productName = CTNotificationService;
 		};
 		4EB836372ADFEC6A008964E3 /* CleverTapSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4EED10C72A86833B00EFF316 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */;
+			productName = CleverTapSDK;
+		};
+		4EEA41442D01BE4300307146 /* CleverTapSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4EED10C72A86833B00EFF316 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */;
 			productName = CleverTapSDK;

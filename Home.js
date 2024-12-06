@@ -15,7 +15,22 @@ import {NativeModules} from 'react-native';
 
 const CleverTap = require('clevertap-react-native');
 
-const {CTModule} = NativeModules;
+const {CTModule, CoachMark} = NativeModules;
+
+export const showCoachMarks = async unitJson => {
+  return new Promise((resolve, reject) => {
+    // Serialize the object to a JSON string
+    const jsonString = JSON.stringify(unitJson);
+
+    CoachMark.showCoachMarks(jsonString, (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
 
 const Separator = () => <View style={styles.separator} />;
 
@@ -258,59 +273,62 @@ class Home extends Component {
 
   nativeDisplay = () => {
     CleverTap.recordEvent('Karthiks Native Display Event');
-    // CleverTap.recordEvent('KarthikNotiEventNew');
-    // var props = {
-    //   'Product Name': 'Home Beauty Callus Remover Device | 1.5 V',
-    //   'Product SKU': '16190009',
-    //   'Product Price': '177.5',
-    //   'Brand Name': 'HOME BEAUTY',
-    //   'Is In Stock': '1',
-    // };
-    // CleverTap.recordEvent('Product Viewed', props);
-    // setTimeout(() => {
-    //   CleverTap.getAllDisplayUnits((err, res) => {
-    //     console.log('All Display Units: ', JSON.stringify(res), err);
-    //   });
-    // }, 10000);
 
     CleverTap.addListener(CleverTap.CleverTapDisplayUnitsLoaded, data => {
       console.log('This is unit iD: ', data);
     });
+
     CleverTap.getAllDisplayUnits((err, res) => {
-      console.log('All Display Units: ', res, err);
-      // this.setState({datasource: JSON.parse(res)});
-      this.setState({datasource: res});
-      console.log('this is Datasource: ', this.state.datasource[0]);
-      //   // this.setState({
-      //   //   title: JSON.stringify(
-      //   //     this.state.datasource.content[0].title.text,
-      //   //   ).replace(/['"]+/g, ''),
-      //   //   message: JSON.stringify(
-      //   //     this.state.datasource.content[0].message.text,
-      //   //   ).replace(/['"]+/g, ''),
-      //   // });
-      //   // this.setState({
-      //   //   title: JSON.stringify(
-      //   //     this.state.datasource.content[0].title.text,
-      //   //   ).replace(/['"]+/g, ''),
-      //   //   message: JSON.stringify(
-      //   //     this.state.datasource.content[0].message.text,
-      //   //   ).replace(/['"]+/g, ''),
-      //   // });
-      Alert.alert('Native Display Clicked');
+      if (err) {
+        console.error('Error fetching display units:', err);
+        return;
+      }
 
-      //   //   // for Display Unit Id use the below one
-      console.log('This is wzrk_id:', this.state.datasource[0].wzrk_id);
-      CleverTap.pushDisplayUnitViewedEventForID(this.state.datasource.ti);
-      CleverTap.pushDisplayUnitClickedEventForID(this.state.datasource.ti);
+      console.log('All Display Units: ', res);
+      this.setState({datasource: res}, async () => {
+        try {
+          const customKv = this.state.datasource[0]?.custom_kv;
+          if (!customKv) {
+            console.error('custom_kv not found in display unit');
+            return;
+          }
 
-      // this.setState({datasource: JSON.parse(res)});
-      // this.setState({nativekey: this.state.datasource.wzrk_id}); //Store wzrk_id to use it as Unit_id
-      this.setState({
-        message: this.state.datasource[0].content[0].message.text,
-        title: this.state.datasource[0].content[0].title.text,
+          const parsedJson = {
+            ...customKv,
+            nd_json: JSON.parse(customKv.nd_json || '{}'),
+          };
+
+          console.log('Prepared JSON for CoachMarks:', parsedJson);
+
+          const result = await showCoachMarks(parsedJson);
+          console.log('CoachMarks completed:', result);
+        } catch (error) {
+          console.error('Error showing CoachMarks:', error);
+        }
       });
     });
+
+    // CleverTap.getAllDisplayUnits((err, res) => {
+    //   console.log('All Display Units: ', res, err);
+    //   this.setState({datasource: res});
+
+    //   showCoachMarks(this.state.datasource[0])
+    //     .then(() => console.log('CoachMarks completed'))
+    //     .catch(error => console.error('Error showing CoachMarks:', error));
+
+    //   console.log('this is Coachmarks Datasource: ', this.state.datasource[0]);
+    //   Alert.alert('Native Display Clicked');
+
+    //   // for Display Unit Id use the below one
+    //   console.log('This is wzrk_id:', this.state.datasource[0].wzrk_id);
+    //   CleverTap.pushDisplayUnitViewedEventForID(this.state.datasource.ti);
+    //   CleverTap.pushDisplayUnitClickedEventForID(this.state.datasource.ti);
+
+    //   this.setState({
+    //     message: this.state.datasource[0].content[0].message.text,
+    //     title: this.state.datasource[0].content[0].title.text,
+    //   });
+    // });
   };
 
   goToKuwait = () => {
@@ -342,6 +360,7 @@ class Home extends Component {
               <View style={styles.row}>
                 <View style={styles.buttonWrapper}>
                   <Button
+                    nativeID="profile_image"
                     title="Custom App Inbox"
                     onPress={() =>
                       this.props.navigation.navigate('CustomAppInbox')
@@ -380,6 +399,7 @@ class Home extends Component {
                 </View>
                 <View style={styles.buttonWrapper}>
                   <Button
+                    nativeID="search"
                     title="Profile"
                     onPress={() => this.props.navigation.navigate('Profile')}
                   />
@@ -391,7 +411,11 @@ class Home extends Component {
             <Separator />
             <Button title="Go To UAE" onPress={this.goToOman} />
             <Separator />
-            <Button title="Update Profile" onPress={this.updateProfile} />
+            <Button
+              nativeID="cart"
+              title="Update Profile"
+              onPress={this.updateProfile}
+            />
             <Separator />
             <Button title="Push Event" onPress={this.pushEvent} />
             <Separator />
@@ -400,7 +424,11 @@ class Home extends Component {
               onPress={this.pushNotificationn}
             />
             <Separator />
-            <Button title="In App" onPress={this.inApp} />
+            <Button
+              nativeID="support_help"
+              title="In App"
+              onPress={this.inApp}
+            />
             <Separator />
             <Button title="App Inbox" onPress={this.appInbox} />
             <Separator />
@@ -408,7 +436,11 @@ class Home extends Component {
             <Separator />
             <Button title="React KK PN" onPress={this.reactKKPush} />
             <Separator />
-            <Button title="Promotional" onPress={this.promotionalNotif} />
+            <Button
+              nativeID="settings"
+              title="Promotional"
+              onPress={this.promotionalNotif}
+            />
             <Separator />
             <Text style={styles.titleText}>Native Display Message </Text>
             <Separator />
