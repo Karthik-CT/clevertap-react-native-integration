@@ -1,9 +1,9 @@
 PODS:
   - boost (1.76.0)
-  - CleverTap-iOS-SDK (6.2.1):
+  - CleverTap-iOS-SDK (7.0.2):
     - SDWebImage (~> 5.11)
-  - clevertap-react-native (2.2.1):
-    - CleverTap-iOS-SDK (= 6.2.1)
+  - clevertap-react-native (3.1.1):
+    - CleverTap-iOS-SDK (= 7.0.2)
     - React-Core
   - CocoaAsyncSocket (7.6.5)
   - CTNotificationContent (0.2.7)
@@ -349,9 +349,9 @@ PODS:
     - React-Core
   - RNScreens (3.35.0):
     - React-RCTImage
-  - SDWebImage (5.19.7):
-    - SDWebImage/Core (= 5.19.7)
-  - SDWebImage/Core (5.19.7)
+  - SDWebImage (5.20.0):
+    - SDWebImage/Core (= 5.20.0)
+  - SDWebImage/Core (5.20.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -510,8 +510,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
-  CleverTap-iOS-SDK: 78ea6d752d84918f0426f7b3959777d862bcb348
-  clevertap-react-native: 34c3acaf46e7f8cd4f349dd5a1f851580d410be3
+  CleverTap-iOS-SDK: 09d1762523c87c14ffbd82b69b070afbe6e3d845
+  clevertap-react-native: ebf85e87af3cace69a41a4ff4caebc51e50df0b1
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CTNotificationContent: 149ec0d68884bf26ef0c045199f6a4e1b5a22dfd
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
@@ -557,7 +557,7 @@ SPEC CHECKSUMS:
   ReactCommon: 650e33cde4fb7d36781cd3143f5276da0abb2f96
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNScreens: 762f33e1dc2f3e55279aad4a58f9b3a4948f7c11
-  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
+  SDWebImage: 73c6079366fea25fa4bb9640d5fb58f0893facd8
   Yoga: 90dcd029e45d8a7c1ff059e8b3c6612ff409061a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

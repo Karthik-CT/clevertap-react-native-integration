@@ -6,9 +6,6 @@
 #import <CleverTap-iOS-SDK/CleverTap.h>
 #import <clevertap-react-native/CleverTapReactManager.h>
 #import <React/RCTLinkingManager.h>
-#import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
-
-
 #import <CleverTap-iOS-SDK/CleverTapInstanceConfig.h>
 
 @implementation AppDelegate
@@ -32,6 +29,9 @@
   [CleverTap autoIntegrate];
   [CleverTap setDebugLevel:CleverTapLogDebug];
   [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
+  
+  //URL delegate set
+  [[CleverTap sharedInstance]setUrlDelegate:self];
   
   //
   //  // Config an additional instance
@@ -94,6 +94,7 @@
   return [RCTLinkingManager application:app openURL:url options:options];
   
 }
+
 -(BOOL) application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
   
   
@@ -114,6 +115,12 @@
 }
 -(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
   completionHandler(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound);
+}
+
+// CleverTapURLDelegate method
+- (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
+    NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
+    return YES;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
