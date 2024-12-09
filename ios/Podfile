@@ -63,7 +63,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 target 'ReactNativeIntegration' do
   # Wrapping use_native_modules! inside a begin-rescue block
@@ -85,6 +85,11 @@ target 'ReactNativeIntegration' do
 
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
 
+  pod 'RNScreens', :path => '../node_modules/react-native-screens/'
+  
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context/'
+  
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
   
   target 'ReactNativeIntegrationTests' do
     inherit! :complete
