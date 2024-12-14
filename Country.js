@@ -57,20 +57,26 @@ const Country = () => {
     }
   };
 
-  initializeCleverTap = country => {
+  const initializeCleverTap = country => {
     try {
       if (Platform.OS === 'android' && CTModule?.initCleverTap) {
         CTModule.initCleverTap(country);
         CTModule.resurrectApp();
-      } else if (Platform.OS === 'ios' && CLTModule) {
+      } else if (Platform.OS === 'ios' && CLTModule?.initializeCleverTap) {
         const config = {
           UAE: {id: 'TEST-RK4-66R-966Z', token: 'TEST-266-432'},
-          KSA: {id: 'TEST-W8W-6WR-846Z', token: 'TEST-206-0b0'},
+          KSA: {id: 'TEST-W8W-846Z', token: 'TEST-206-0b0'},
         };
         const {id, token} = config[country] || {};
-        CLTModule.initializeCleverTap(country.toLowerCase(), id, token);
+        if (id && token) {
+          CLTModule.initializeCleverTap(country.toLowerCase(), id, token);
+        } else {
+          console.error('CleverTap config missing for selected country');
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error('Error initializing CleverTap:', error);
+    }
   };
 
   if (isLoading) {
