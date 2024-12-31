@@ -15,7 +15,7 @@ import {NativeModules} from 'react-native';
 
 const CleverTap = require('clevertap-react-native');
 
-const {CTModule} = NativeModules;
+const {CTModule, CLTModule} = NativeModules;
 
 const Separator = () => <View style={styles.separator} />;
 
@@ -332,6 +332,21 @@ class Home extends Component {
     this.props.navigation.navigate('Profile');
   };
 
+  getValues = () => {
+    CLTModule.printStoredValues((error, result) => {
+      if (error) {
+        console.error('Error fetching stored values:', error);
+      } else {
+        console.log('Stored Values:', result);
+        // Example: Access the variables
+        const {redirectionUrl, channelValue, channelName} = result;
+        console.log('redirectionUrl:', redirectionUrl);
+        console.log('channelValue:', channelValue);
+        console.log('channelName:', channelName);
+      }
+    });
+  };
+
   render() {
     return (
       <ScrollView>
@@ -390,6 +405,8 @@ class Home extends Component {
             <Button title="Go To KSA" onPress={this.goToKuwait} />
             <Separator />
             <Button title="Go To UAE" onPress={this.goToOman} />
+            <Separator />
+            <Button title="Get Value" onPress={this.getValues} />
             <Separator />
             <Button title="Update Profile" onPress={this.updateProfile} />
             <Separator />

@@ -6,7 +6,6 @@
 #import <CleverTap-iOS-SDK/CleverTap.h>
 #import <clevertap-react-native/CleverTapReactManager.h>
 #import <React/RCTLinkingManager.h>
-//#import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
 #import <CleverTap-iOS-SDK/CleverTapInstanceConfig.h>
 #import <React/RCTLog.h>
 
@@ -27,6 +26,8 @@
   }
   
   [self registerForPush];
+  
+  [CleverTap autoIntegrate];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
@@ -50,15 +51,29 @@
   CleverTapInstanceConfig *ctConfig = [[CleverTapInstanceConfig alloc] initWithAccountId:appgroupsAccountId accountToken:appgroupsAccountToken];
   CleverTap *cleverTapAdditionalInstance = [CleverTap instanceWithConfig:ctConfig];
   [cleverTapAdditionalInstance setUrlDelegate:self];
-  [cleverTapAdditionalInstance recordEvent:@"oman Screen Viewed"];
-
-
+  
   return YES;
 }
 
 - (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
-    NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
-    return YES;
+  NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
+  NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
+  
+  // Convert NSURL to NSString before storing
+  NSString *urlString = [url absoluteString];
+  [defaults setObject:urlString forKey:@"redirectionUrl"];
+  
+  if (channel == 0) {
+    [defaults setObject:@(0) forKey:@"channel_value"];
+    [defaults setObject:@"CleverTapPushNotification" forKey:@"channel_name"];
+  } else if (channel == 1) {
+    [defaults setObject:@(1) forKey:@"channel_value"];
+    [defaults setObject:@"CleverTapAppInbox" forKey:@"channel_name"];
+  } else if (channel == 2) {
+    [defaults setObject:@(2) forKey:@"channel_value"];
+    [defaults setObject:@"CleverTapInAppNotification" forKey:@"channel_name"];
+  }
+  return YES;
 }
 
 -(void) registerForPush {

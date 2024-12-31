@@ -273,4 +273,26 @@ RCT_EXPORT_METHOD(intializeNotificationClickedEvent)
   callback(@[e,r]);
 }
 
+RCT_EXPORT_METHOD(printStoredValues:(RCTResponseSenderBlock)callback)
+{
+  // Access the app group UserDefaults
+  NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
+  
+  // Retrieve values stored in UserDefaults
+  NSString *storedUrlString = [defaults objectForKey:@"redirectionUrl"];
+  NSString *channelValue = [[defaults objectForKey:@"channel_value"] stringValue];
+  NSString *channelName = [defaults objectForKey:@"channel_name"];
+  
+  // Prepare the response dictionary
+  NSDictionary *response = @{
+    @"redirectionUrl": storedUrlString ?: @"",
+    @"channelValue": channelValue ?: @"",
+    @"channelName": channelName ?: @""
+  };
+
+  // Return the response to the JavaScript side
+  callback(@[[NSNull null], response]);
+}
+
+
 @end
