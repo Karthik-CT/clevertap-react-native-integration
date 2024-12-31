@@ -80,6 +80,11 @@ CleverTap* getCleverTapAPI(NSString* type, NSString* cleverTapId, NSString* clev
     if(APNSPushToken != nil){
       [cleverTapAdditionalInstance setPushToken:APNSPushToken];
     }
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
+    NSString *countryAccountID = cleverTapId;
+    NSString *countryAccountToken = cleverTapToken;
+    [defaults setObject:countryAccountID forKey:@"countryAccountID"];
+    [defaults setObject:countryAccountToken forKey:@"countryAccountToken"];
     
   } else if([type isEqual:@"ksa"]){
     CleverTapInstanceConfig *ctConfigKSA = [[CleverTapInstanceConfig alloc] initWithAccountId:cleverTapId accountToken:cleverTapToken];
@@ -92,6 +97,11 @@ CleverTap* getCleverTapAPI(NSString* type, NSString* cleverTapId, NSString* clev
     if(APNSPushToken != nil){
       [cleverTapAdditionalInstanceKSA setPushToken:APNSPushToken];
     }
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
+    NSString *countryAccountID = cleverTapId;
+    NSString *countryAccountToken = cleverTapToken;
+    [defaults setObject:countryAccountID forKey:@"countryAccountID"];
+    [defaults setObject:countryAccountToken forKey:@"countryAccountToken"];
     
   }
 #ifdef DEBUG
@@ -109,7 +119,7 @@ CleverTap* getCleverTapAPI(NSString* type, NSString* cleverTapId, NSString* clev
   return NULL;
 }
 RCT_EXPORT_METHOD(initializeCleverTap:(NSString*)countryId passCleverTapId:(NSString*)passCleverTapId passCleverTapToken:(NSString*)passCleverTapToken){
-  RCTLogInfo(@"[CleverTap initializeCleverTap]");
+  RCTLogInfo(@"[CleverTap initializeCleverTap]: %@ %@", passCleverTapId, passCleverTapToken);
   CleverTap *cleverTapInstance = getCleverTapAPI(countryId,passCleverTapId,passCleverTapToken);
   [self setDelegates:cleverTapInstance];
 }

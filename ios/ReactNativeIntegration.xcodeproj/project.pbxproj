@@ -14,6 +14,7 @@
 		3FCA56CEE1CE3015D8D233FF /* libPods-ReactNativeIntegration-NotificationContentDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0805C4A172230C55A62523 /* libPods-ReactNativeIntegration-NotificationContentDemo.a */; };
 		4E0083162CEF8D7C004F9707 /* CLTModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0083152CEF8D7C004F9707 /* CLTModule.m */; };
 		4E0D791C2AE16E6A002F7CA3 /* CTNotificationService in Frameworks */ = {isa = PBXBuildFile; productRef = 4E0D791B2AE16E6A002F7CA3 /* CTNotificationService */; };
+		4E16D04B2D117DEF00809A45 /* CleverTapSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4E16D04A2D117DEF00809A45 /* CleverTapSDK */; };
 		4E54906B2A867F6E00E59229 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54906A2A867F6E00E59229 /* NotificationService.swift */; };
 		4E54906F2A867F6E00E59229 /* NotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4E5490682A867F6E00E59229 /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4E58BEDC2CB658640041189E /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 4E58BEDB2CB658640041189E /* main.jsbundle */; };
@@ -32,7 +33,6 @@
 		4E756B732A862AB0004FA7E2 /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC732A65BA9D008C51DC /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4E756B752A862AB2004FA7E2 /* double-conversion.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC782A65BAD5008C51DC /* double-conversion.xcframework */; };
 		4E756B762A862AB2004FA7E2 /* double-conversion.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC782A65BAD5008C51DC /* double-conversion.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4EB836382ADFEC6A008964E3 /* CleverTapSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4EB836372ADFEC6A008964E3 /* CleverTapSDK */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		895AC7C084B2D891FBDC1AEC /* libPods-ReactNativeIntegration-ReactNativeIntegrationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71B63496D44934A82D768F /* libPods-ReactNativeIntegration-ReactNativeIntegrationTests.a */; };
 		8BC92B468D00E546556585F2 /* libPods-ReactNativeIntegration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AD83F7FA9964C8BB0FB346 /* libPods-ReactNativeIntegration.a */; };
@@ -109,6 +109,7 @@
 		4E0D79142AE16CE9002F7CA3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E0D79162AE16D11002F7CA3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E0D79182AE16D97002F7CA3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E16D0482D117DA000809A45 /* libCleverTap-iOS-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libCleverTap-iOS-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E370F6E28BE182300DCB78F /* ReactNativeIntegration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ReactNativeIntegration.entitlements; path = ReactNativeIntegration/ReactNativeIntegration.entitlements; sourceTree = "<group>"; };
 		4E5490682A867F6E00E59229 /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E54906A2A867F6E00E59229 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -161,8 +162,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E16D04B2D117DEF00809A45 /* CleverTapSDK in Frameworks */,
 				4E0D791C2AE16E6A002F7CA3 /* CTNotificationService in Frameworks */,
-				4EB836382ADFEC6A008964E3 /* CleverTapSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +218,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4E16D0482D117DA000809A45 /* libCleverTap-iOS-SDK.a */,
 				4E0D79182AE16D97002F7CA3 /* libCTNotificationService.a */,
 				4E0D79162AE16D11002F7CA3 /* libCTNotificationService.a */,
 				4E0D79142AE16CE9002F7CA3 /* libCTNotificationService.a */,
@@ -369,8 +371,8 @@
 			);
 			name = NotificationService;
 			packageProductDependencies = (
-				4EB836372ADFEC6A008964E3 /* CleverTapSDK */,
 				4E0D791B2AE16E6A002F7CA3 /* CTNotificationService */,
+				4E16D04A2D117DEF00809A45 /* CleverTapSDK */,
 			);
 			productName = NotificationService;
 			productReference = 4E5490682A867F6E00E59229 /* NotificationService.appex */;
@@ -430,8 +432,8 @@
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			packageReferences = (
-				4EED10C72A86833B00EFF316 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */,
 				4E0D791A2AE16E6A002F7CA3 /* XCRemoteSwiftPackageReference "CTNotificationService" */,
+				4E16D0472D117D6800809A45 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */,
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
@@ -1181,12 +1183,12 @@
 				minimumVersion = 0.1.5;
 			};
 		};
-		4EED10C72A86833B00EFF316 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */ = {
+		4E16D0472D117D6800809A45 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CleverTap/clevertap-ios-sdk";
+			repositoryURL = "https://github.com/CleverTap/clevertap-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 7.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1197,9 +1199,9 @@
 			package = 4E0D791A2AE16E6A002F7CA3 /* XCRemoteSwiftPackageReference "CTNotificationService" */;
 			productName = CTNotificationService;
 		};
-		4EB836372ADFEC6A008964E3 /* CleverTapSDK */ = {
+		4E16D04A2D117DEF00809A45 /* CleverTapSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4EED10C72A86833B00EFF316 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */;
+			package = 4E16D0472D117D6800809A45 /* XCRemoteSwiftPackageReference "clevertap-ios-sdk" */;
 			productName = CleverTapSDK;
 		};
 /* End XCSwiftPackageProductDependency section */

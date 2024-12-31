@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,10 @@ import {
   ActivityIndicator,
   Platform,
 } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
-import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 import {NativeModules} from 'react-native';
-
+import RNPickerSelect from 'react-native-picker-select';
 const {CTModule, CLTModule} = NativeModules;
 
 const Country = () => {
@@ -19,16 +18,20 @@ const Country = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
-  const pickerItems = [
-    {label: 'UAE', value: 'UAE'},
-    {label: 'KSA', value: 'KSA'},
-  ];
+  const pickerItems = useMemo(
+    () => [
+      {label: 'UAE', value: 'UAE'},
+      {label: 'KSA', value: 'KSA'},
+    ],
+    [],
+  );
 
   useEffect(() => {
     const checkCountry = async () => {
       try {
         const storedCountry = await AsyncStorage.getItem('selectedCountry');
         if (storedCountry) {
+          setIsLoading(true);
           initializeCleverTap(storedCountry);
           navigation.replace('Login');
         } else {
@@ -46,6 +49,7 @@ const Country = () => {
   const handleSelection = async value => {
     if (!value) return;
 
+    setIsLoading(true);
     try {
       setSelectedValue(value);
       await AsyncStorage.setItem('selectedCountry', value);
@@ -54,6 +58,8 @@ const Country = () => {
       navigation.replace('Login');
     } catch (error) {
       console.error('Error in handleSelection:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,7 +71,7 @@ const Country = () => {
       } else if (Platform.OS === 'ios' && CLTModule?.initializeCleverTap) {
         const config = {
           UAE: {id: 'TEST-RK4-66R-966Z', token: 'TEST-266-432'},
-          KSA: {id: 'TEST-W8W-846Z', token: 'TEST-206-0b0'},
+          KSA: {id: 'TEST-W8W-6WR-846Z', token: 'TEST-206-0b0'},
         };
         const {id, token} = config[country] || {};
         if (id && token) {
@@ -76,6 +82,7 @@ const Country = () => {
       }
     } catch (error) {
       console.error('Error initializing CleverTap:', error);
+      setIsLoading(false);
     }
   };
 

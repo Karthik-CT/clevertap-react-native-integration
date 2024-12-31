@@ -6,7 +6,7 @@
 #import <CleverTap-iOS-SDK/CleverTap.h>
 #import <clevertap-react-native/CleverTapReactManager.h>
 #import <React/RCTLinkingManager.h>
-#import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
+//#import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
 #import <CleverTap-iOS-SDK/CleverTapInstanceConfig.h>
 #import <React/RCTLog.h>
 
@@ -33,7 +33,32 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  // Access shared UserDefaults
+  NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
+  
+  // Safely unwrap and handle nil cases
+  NSString *appgroupsAccountId = [defaults valueForKey:@"countryAccountID"];
+  NSString *appgroupsAccountToken = [defaults valueForKey:@"countryAccountToken"];
+  
+  if (!appgroupsAccountId || !appgroupsAccountToken) {
+    NSLog(@"CleverTap account details not set in UserDefaults!");
+    return YES; // Continue app launch to allow ViewController to set defaults
+  }
+  
+  // Initialize CleverTap configuration
+  CleverTapInstanceConfig *ctConfig = [[CleverTapInstanceConfig alloc] initWithAccountId:appgroupsAccountId accountToken:appgroupsAccountToken];
+  CleverTap *cleverTapAdditionalInstance = [CleverTap instanceWithConfig:ctConfig];
+  [cleverTapAdditionalInstance setUrlDelegate:self];
+  [cleverTapAdditionalInstance recordEvent:@"oman Screen Viewed"];
+
+
   return YES;
+}
+
+- (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
+    NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
+    return YES;
 }
 
 -(void) registerForPush {

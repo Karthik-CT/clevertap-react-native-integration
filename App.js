@@ -41,6 +41,30 @@ const linking = {
 };
 
 const App = () => {
+  // Listener to handle incoming deep links
+  // Linking.addEventListener('url', _handleOpenUrl);
+
+  // /// this handles the case where a deep link launches the application
+  // Linking.getInitialURL()
+  //   .then(url => {
+  //     if (url) {
+  //       console.log('launch url', url);
+  //       _handleOpenUrl({url});
+  //     }
+  //   })
+  //   .catch(err => console.error('launch url error', err));
+
+  // // check to see if CleverTap has a launch deep link
+  // // handles the case where the app is launched from a push notification containing a deep link
+  // CleverTap.getInitialUrl((err, url) => {
+  //   if (url) {
+  //     console.log('CleverTap launch url', url);
+  //     _handleOpenUrl({url}, 'CleverTap');
+  //   } else if (err) {
+  //     console.log('CleverTap launch url', err);
+  //   }
+  // });
+
   return (
     <NavigationContainer
       linking={linking}
