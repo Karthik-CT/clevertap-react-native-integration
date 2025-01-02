@@ -218,7 +218,7 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.4.0'
 
-    implementation "com.clevertap.android:push-templates:1.1.0"
+    implementation "com.clevertap.android:push-templates:1.2.4"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

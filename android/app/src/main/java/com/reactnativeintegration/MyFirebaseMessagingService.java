@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import com.clevertap.android.sdk.CleverTapAPI;
 import com.clevertap.android.sdk.pushnotification.NotificationInfo;
+import com.clevertap.android.sdk.pushnotification.fcm.CTFcmMessageHandler;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
@@ -28,7 +29,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else {
                     Log.d("pay", "I will print it");
                     if (info.fromCleverTap) {
-                        CleverTapAPI.createNotification(getApplicationContext(), extras);
+                        new CTFcmMessageHandler()
+                                .createNotification(getApplicationContext(), message);
+//                        CleverTapAPI.createNotification(getApplicationContext(), extras);
                     }
                 }
                 // if (info.fromCleverTap) {
