@@ -14,6 +14,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   
+  [self registerForPush];
+  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"ReactNativeIntegration"
@@ -25,8 +27,6 @@
     rootView.backgroundColor = [UIColor whiteColor];
   }
   
-  [self registerForPush];
-  
   [CleverTap autoIntegrate];
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -34,23 +34,6 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  
-  // Access shared UserDefaults
-  NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
-  
-  // Safely unwrap and handle nil cases
-  NSString *appgroupsAccountId = [defaults valueForKey:@"countryAccountID"];
-  NSString *appgroupsAccountToken = [defaults valueForKey:@"countryAccountToken"];
-  
-  if (!appgroupsAccountId || !appgroupsAccountToken) {
-    NSLog(@"CleverTap account details not set in UserDefaults!");
-    return YES; // Continue app launch to allow ViewController to set defaults
-  }
-  
-  // Initialize CleverTap configuration
-  CleverTapInstanceConfig *ctConfig = [[CleverTapInstanceConfig alloc] initWithAccountId:appgroupsAccountId accountToken:appgroupsAccountToken];
-  CleverTap *cleverTapAdditionalInstance = [CleverTap instanceWithConfig:ctConfig];
-  [cleverTapAdditionalInstance setUrlDelegate:self];
   
   return YES;
 }

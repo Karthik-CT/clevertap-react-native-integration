@@ -23,7 +23,7 @@
 #import "CleverTapPushNotificationDelegate.h"
 #import "CleverTap+PushPermission.h"
 
-@interface CLTModule() <CleverTapDisplayUnitDelegate, CleverTapPushNotificationDelegate, CleverTapPushPermissionDelegate> {
+@interface CLTModule() <CleverTapDisplayUnitDelegate, CleverTapPushNotificationDelegate, CleverTapPushPermissionDelegate, CleverTapURLDelegate> {
 }
 
 @end
@@ -57,7 +57,13 @@ RCT_EXPORT_MODULE()
 - (void)setDelegates:(CleverTap *)cleverTapInstances {
   [cleverTapInstances setDisplayUnitDelegate:self];
   [cleverTapInstances setPushNotificationDelegate:self];
+  [cleverTapInstances setUrlDelegate:self];
   //    [cleverTapInstances setPushPermissionDelegate:self];
+}
+
+- (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
+  NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
+  return YES;
 }
 
 CleverTap* getCleverTapAPI(NSString* type, NSString* cleverTapId, NSString* cleverTapToken) {

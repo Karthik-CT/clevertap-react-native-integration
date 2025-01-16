@@ -13,6 +13,7 @@
 
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
-@interface CLTModule : NSObject <RCTBridgeModule>
+#import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
+@interface CLTModule : NSObject <RCTBridgeModule, CleverTapURLDelegate>
 
 @end
