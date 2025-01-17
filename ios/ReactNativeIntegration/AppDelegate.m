@@ -38,27 +38,6 @@
   return YES;
 }
 
-- (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
-  NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
-  NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.clevertapTest"];
-  
-  // Convert NSURL to NSString before storing
-  NSString *urlString = [url absoluteString];
-  [defaults setObject:urlString forKey:@"redirectionUrl"];
-  
-  if (channel == 0) {
-    [defaults setObject:@(0) forKey:@"channel_value"];
-    [defaults setObject:@"CleverTapPushNotification" forKey:@"channel_name"];
-  } else if (channel == 1) {
-    [defaults setObject:@(1) forKey:@"channel_value"];
-    [defaults setObject:@"CleverTapAppInbox" forKey:@"channel_name"];
-  } else if (channel == 2) {
-    [defaults setObject:@(2) forKey:@"channel_value"];
-    [defaults setObject:@"CleverTapInAppNotification" forKey:@"channel_name"];
-  }
-  return YES;
-}
-
 -(void) registerForPush {
   
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];

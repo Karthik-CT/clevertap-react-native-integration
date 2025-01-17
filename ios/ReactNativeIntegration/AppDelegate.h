@@ -4,7 +4,7 @@
 #import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
 #import <CleverTap-iOS-SDK/CleverTapPushNotificationDelegate.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, CleverTapURLDelegate, CleverTapPushNotificationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, CleverTapPushNotificationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic,strong) NSDictionary *resp;

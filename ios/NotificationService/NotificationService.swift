@@ -20,8 +20,8 @@ class NotificationService: CTNotificationServiceExtension {
     let defaults = UserDefaults.init(suiteName: "group.clevertapTest")
     let countryId = defaults?.value(forKey: "countryId") as? String
     
-    let AccountId = defaults?.value(forKey: "AccountId") as? String
-    let AccountToken = defaults?.value(forKey: "AccountToken") as? String
+    let AccountId = defaults?.value(forKey: "countryAccountID") as? String
+    let AccountToken = defaults?.value(forKey: "countryAccountToken") as? String
     let emailId = defaults?.value(forKey: "email") as? String
     let userId = defaults?.value(forKey: "identity")
     
