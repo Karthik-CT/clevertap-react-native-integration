@@ -22,6 +22,9 @@
 #import "CTVar.h"
 #import "CleverTapPushNotificationDelegate.h"
 #import "CleverTap+PushPermission.h"
+#import <React/RCTBridge.h>
+#import <React/RCTEventEmitter.h>
+#import "CleverTapEventEmitter.h"
 
 @interface CLTModule() <CleverTapDisplayUnitDelegate, CleverTapPushNotificationDelegate, CleverTapPushPermissionDelegate, CleverTapURLDelegate> {
 }
@@ -63,7 +66,8 @@ RCT_EXPORT_MODULE()
 
 - (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
   NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
-  return YES;
+  [CleverTapEventEmitter sendURLToReactNative:url];
+  return NO;
 }
 
 CleverTap* getCleverTapAPI(NSString* type, NSString* cleverTapId, NSString* cleverTapToken) {
@@ -295,7 +299,7 @@ RCT_EXPORT_METHOD(printStoredValues:(RCTResponseSenderBlock)callback)
     @"channelValue": channelValue ?: @"",
     @"channelName": channelName ?: @""
   };
-
+  
   // Return the response to the JavaScript side
   callback(@[[NSNull null], response]);
 }

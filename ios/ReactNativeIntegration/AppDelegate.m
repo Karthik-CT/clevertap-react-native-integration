@@ -8,6 +8,8 @@
 #import <React/RCTLinkingManager.h>
 #import <CleverTap-iOS-SDK/CleverTapInstanceConfig.h>
 #import <React/RCTLog.h>
+#import <React/RCTEventEmitter.h>
+#import "CleverTapEventEmitter.h"
 
 @implementation AppDelegate
 

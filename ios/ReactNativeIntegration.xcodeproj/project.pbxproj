@@ -33,6 +33,7 @@
 		4E756B732A862AB0004FA7E2 /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC732A65BA9D008C51DC /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4E756B752A862AB2004FA7E2 /* double-conversion.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC782A65BAD5008C51DC /* double-conversion.xcframework */; };
 		4E756B762A862AB2004FA7E2 /* double-conversion.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5CDC782A65BAD5008C51DC /* double-conversion.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4EC2EBA12D3A8EB80078A873 /* CleverTapEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EC2EBA02D3A8EB80078A873 /* CleverTapEventEmitter.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		895AC7C084B2D891FBDC1AEC /* libPods-ReactNativeIntegration-ReactNativeIntegrationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B71B63496D44934A82D768F /* libPods-ReactNativeIntegration-ReactNativeIntegrationTests.a */; };
 		8BC92B468D00E546556585F2 /* libPods-ReactNativeIntegration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AD83F7FA9964C8BB0FB346 /* libPods-ReactNativeIntegration.a */; };
@@ -128,6 +129,8 @@
 		4E5CDC7D2A65BB31008C51DC /* NotificationContentDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationContentDemo.entitlements; sourceTree = "<group>"; };
 		4EB836392ADFEC8A008964E3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EB8363B2ADFEC95008964E3 /* libCTNotificationService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCTNotificationService.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EC2EBA02D3A8EB80078A873 /* CleverTapEventEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CleverTapEventEmitter.m; sourceTree = "<group>"; };
+		4EC2EBA22D3A8EC60078A873 /* CleverTapEventEmitter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CleverTapEventEmitter.h; sourceTree = "<group>"; };
 		4F0805C4A172230C55A62523 /* libPods-ReactNativeIntegration-NotificationContentDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeIntegration-NotificationContentDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52AD83F7FA9964C8BB0FB346 /* libPods-ReactNativeIntegration.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeIntegration.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B0C681D866E837824F7E8F2 /* Pods-ReactNativeIntegration-ReactNativeIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeIntegration-ReactNativeIntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeIntegration-ReactNativeIntegrationTests/Pods-ReactNativeIntegration-ReactNativeIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +205,7 @@
 		13B07FAE1A68108700A75B9A /* ReactNativeIntegration */ = {
 			isa = PBXGroup;
 			children = (
+				4EC2EBA22D3A8EC60078A873 /* CleverTapEventEmitter.h */,
 				4E370F6E28BE182300DCB78F /* ReactNativeIntegration.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -211,6 +215,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				4EC2EBA02D3A8EB80078A873 /* CleverTapEventEmitter.m */,
 			);
 			name = ReactNativeIntegration;
 			sourceTree = "<group>";
@@ -684,6 +689,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EC2EBA12D3A8EB80078A873 /* CleverTapEventEmitter.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				4E0083162CEF8D7C004F9707 /* CLTModule.m in Sources */,

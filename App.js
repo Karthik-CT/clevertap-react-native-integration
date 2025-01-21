@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Linking} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -12,6 +12,10 @@ import ProdExp from './ProdExp';
 import GeoFence from './GeoFence';
 import Login from './Login';
 import Country from './Country';
+
+import {NativeEventEmitter, NativeModules} from 'react-native';
+const {CleverTapEventEmitter} = NativeModules;
+const eventEmitter = new NativeEventEmitter(CleverTapEventEmitter);
 
 const Stack = createStackNavigator();
 
@@ -41,29 +45,23 @@ const linking = {
 };
 
 const App = () => {
-  // Listener to handle incoming deep links
-  // Linking.addEventListener('url', _handleOpenUrl);
+  useEffect(() => {
+    const subscription = eventEmitter.addListener(
+      'CleverTapURLTapped',
+      event => {
+        console.log('URL received from CleverTap:', event.url);
+        handleRedirection(event.url);
+      },
+    );
 
-  // /// this handles the case where a deep link launches the application
-  // Linking.getInitialURL()
-  //   .then(url => {
-  //     if (url) {
-  //       console.log('launch url', url);
-  //       _handleOpenUrl({url});
-  //     }
-  //   })
-  //   .catch(err => console.error('launch url error', err));
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
-  // // check to see if CleverTap has a launch deep link
-  // // handles the case where the app is launched from a push notification containing a deep link
-  // CleverTap.getInitialUrl((err, url) => {
-  //   if (url) {
-  //     console.log('CleverTap launch url', url);
-  //     _handleOpenUrl({url}, 'CleverTap');
-  //   } else if (err) {
-  //     console.log('CleverTap launch url', err);
-  //   }
-  // });
+  const handleRedirection = url => {
+    console.log('Redirecting to URL:', url);
+  };
 
   return (
     <NavigationContainer
