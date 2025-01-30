@@ -1,6 +1,9 @@
 package com.reactnativeintegration;
 
+import com.clevertap.android.pushtemplates.PushTemplateNotificationHandler;
 import com.clevertap.android.sdk.ActivityLifecycleCallback;
+import com.clevertap.android.sdk.CleverTapAPI;
+import com.clevertap.android.sdk.interfaces.NotificationHandler;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import java.util.Iterator;
 import java.util.*;
@@ -67,6 +70,7 @@ public class MainApplication extends CleverTapApplication implements ActivityLif
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
         initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+        CleverTapAPI.setNotificationHandler((NotificationHandler)new PushTemplateNotificationHandler());
     }
 
     private static void initializeFlipper(

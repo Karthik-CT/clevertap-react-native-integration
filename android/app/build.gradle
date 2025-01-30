@@ -204,7 +204,7 @@ dependencies {
 
     implementation project(':clevertap-react-native')
     // implementation 'com.clevertap.android:clevertap-android-sdk:4.6.6'
-    implementation 'com.clevertap.android:clevertap-android-sdk:6.2.1'
+    implementation 'com.clevertap.android:clevertap-android-sdk:7.0.2'
     implementation 'com.google.android.gms:play-services-base:17.6.0'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
     // implementation 'com.google.android.exoplayer:exoplayer:2.8.4'
@@ -217,8 +217,9 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'
 
     implementation 'com.google.android.material:material:1.4.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
-    implementation "com.clevertap.android:push-templates:1.1.0"
+    implementation "com.clevertap.android:push-templates:1.2.4"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
