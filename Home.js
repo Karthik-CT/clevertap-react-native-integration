@@ -48,6 +48,12 @@ CleverTap.getInitialUrl((err, url) => {
 
 CleverTap.enablePersonalization();
 
+CleverTap.onUserLogin({
+  DOB: '2025-03-03',
+  dobDate: new Date('2025-03-03T06:35:31'),
+  DOBRaised: 'test2',
+});
+
 CleverTap.getAllInboxMessages((err, res) => {
   console.log('All Inbox Messages: ', res, err);
   console.log('LOGGGG: ', res.length);

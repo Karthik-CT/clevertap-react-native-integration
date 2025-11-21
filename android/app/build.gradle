@@ -78,6 +78,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
+    entryFile: "index.js",
     enableHermes: false,  // clean and rebuild if changing
 ]
 
@@ -129,13 +130,14 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     // compileSdkVersion rootProject.ext.compileSdkVersion
-    compileSdkVersion 33
+    namespace "com.reactnativeintegration"
+    compileSdkVersion 35
 
     defaultConfig {
         applicationId "com.reactnativeintegration"
         minSdkVersion rootProject.ext.minSdkVersion
         // targetSdkVersion rootProject.ext.targetSdkVersion
-        targetSdkVersion 33
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -158,6 +160,7 @@ android {
     }
     buildTypes {
         debug {
+            minifyEnabled enableProguardInReleaseBuilds
             signingConfig signingConfigs.debug
             if (nativeArchitectures) {
                 ndk {
@@ -246,6 +249,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation project(':react-native-masked-view')
+
 }
 
 // Run this once to be able to run the application with BUCK

@@ -27,6 +27,8 @@ target 'ReactNativeIntegration' do
     :hermes_enabled => false
   )
 
+  pod 'SDWebImage', :modular_headers => true
+
   pod 'clevertap-react-native', :path => '../node_modules/clevertap-react-native'
   
   pod 'OpenSSL-Universal', '1.1.180'
@@ -59,11 +61,11 @@ target 'ReactNativeIntegration' do
     end
   end
 
-  #target 'NotificationService' do
-    # Pods for NotificationService
-    # pod 'CTNotificationService'
-    # pod "CleverTap-iOS-SDK"
-  #end
+#  target 'NotificationService' do
+#     Pods for NotificationService
+#     pod 'CTNotificationService'
+#     pod "CleverTap-iOS-SDK"
+#  end
 
   target 'NotificationContentDemo' do
     pod 'CTNotificationContent'

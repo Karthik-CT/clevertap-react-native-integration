@@ -1,6 +1,7 @@
 package com.reactnativeintegration;
 
 import com.clevertap.android.sdk.ActivityLifecycleCallback;
+import com.facebook.react.BuildConfig;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import java.util.Iterator;
 import java.util.*;
@@ -31,6 +32,8 @@ import org.json.JSONObject;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import com.clevertap.react.CleverTapApplication;
+import org.reactnative.maskedview.RNCMaskedViewPackage;
+
 
 public class MainApplication extends CleverTapApplication implements ActivityLifecycleCallbacks, ReactApplication {
 
@@ -45,6 +48,7 @@ public class MainApplication extends CleverTapApplication implements ActivityLif
                 protected List<ReactPackage> getPackages() {
                     List<ReactPackage> packages = new PackageList(this).getPackages();
                     packages.add(new CTModulePackage());
+                    packages.add(new RNCMaskedViewPackage());
                     return packages;
                 }
 

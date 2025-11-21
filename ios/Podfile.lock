@@ -1,9 +1,9 @@
 PODS:
   - boost (1.76.0)
-  - CleverTap-iOS-SDK (6.2.1):
+  - CleverTap-iOS-SDK (7.3.1):
     - SDWebImage (~> 5.11)
-  - clevertap-react-native (2.2.1):
-    - CleverTap-iOS-SDK (= 6.2.1)
+  - clevertap-react-native (3.6.0):
+    - CleverTap-iOS-SDK (= 7.3.1)
     - React-Core
   - CocoaAsyncSocket (7.6.5)
   - CTNotificationContent (0.2.7)
@@ -351,9 +351,9 @@ PODS:
     - React-Core
   - RNScreens (3.34.0):
     - React-RCTImage
-  - SDWebImage (5.19.7):
-    - SDWebImage/Core (= 5.19.7)
-  - SDWebImage/Core (5.19.7)
+  - SDWebImage (5.21.2):
+    - SDWebImage/Core (= 5.21.2)
+  - SDWebImage/Core (5.21.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -419,6 +419,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens/`)
+  - SDWebImage
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -514,9 +515,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  boost: a7c83b31436843459a1961bfd74b96033dc77234
-  CleverTap-iOS-SDK: 78ea6d752d84918f0426f7b3959777d862bcb348
-  clevertap-react-native: 34c3acaf46e7f8cd4f349dd5a1f851580d410be3
+  boost: cf4ae79078f2923e5958340491953c526843d174
+  CleverTap-iOS-SDK: 05c1860785c898f4f2316df6a207eb0ebd9d890a
+  clevertap-react-native: 16664dd6b290786b6224791f16aa3a55e725639d
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   CTNotificationContent: 149ec0d68884bf26ef0c045199f6a4e1b5a22dfd
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
@@ -563,10 +564,10 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNScreens: dd88ca59d4b1324f34baf32f5ad9fd8046f57120
-  SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
+  SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
   Yoga: 90dcd029e45d8a7c1ff059e8b3c6612ff409061a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 15ae0786a6924d59b39aed8d4fbeb12f9276fd8c
+PODFILE CHECKSUM: c60dcb41102375a9e9dd449df8c7b37360d55830
 
 COCOAPODS: 1.15.2
