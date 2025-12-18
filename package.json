@@ -17,7 +17,7 @@
     "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/stack": "^6.2.1",
-    "clevertap-react-native": "^3.6.0",
+    "clevertap-react-native": "^3.7.0",
     "cocoapods": "*",
     "react": "17.0.2",
     "react-native": "0.67.3",

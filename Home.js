@@ -48,10 +48,12 @@ CleverTap.getInitialUrl((err, url) => {
 
 CleverTap.enablePersonalization();
 
-CleverTap.onUserLogin({
-  DOB: '2025-03-03',
-  dobDate: new Date('2025-03-03T06:35:31'),
-  DOBRaised: 'test2',
+CleverTap.profileSet({
+  silverBoxCount: 2,
+  platinumBoxCount: 3,
+  goldBoxCount: 5,
+  cdp_first_name: 'ABCD',
+  Nationality: 'Indian',
 });
 
 CleverTap.getAllInboxMessages((err, res) => {
@@ -180,6 +182,12 @@ class Home extends Component {
     });
     CleverTap.profileGetProperty('Name', (err, res) => {
       console.log('CleverTap GetProperty  => CleverTap Name: ', res, err);
+    });
+  };
+
+  sendDOB = () => {
+    CleverTap.profileSet({
+      DOB: new Date('2025-03-03T06:35:31'),
     });
   };
 
@@ -426,6 +434,13 @@ class Home extends Component {
               title="Get Profile Property"
               onPress={this.profileGetProp}
             />
+            <Separator />
+            <Button title="Send DOB" onPress={this.sendDOB} />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
             <Separator />
           </View>
         </SafeAreaView>

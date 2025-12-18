@@ -7,8 +7,6 @@
 #import <clevertap-react-native/CleverTapReactManager.h>
 #import <React/RCTLinkingManager.h>
 #import <CleverTap-iOS-SDK/CleverTapURLDelegate.h>
-
-
 #import <CleverTap-iOS-SDK/CleverTapInstanceConfig.h>
 
 @implementation AppDelegate
@@ -32,6 +30,8 @@
   [CleverTap autoIntegrate];
   [CleverTap setDebugLevel:CleverTapLogDebug];
   [[CleverTapReactManager sharedInstance] applicationDidLaunchWithOptions:launchOptions];
+  
+  [[CleverTap sharedInstance]setUrlDelegate:self];
   
   //
   //  // Config an additional instance
@@ -70,6 +70,12 @@
     }
   }];
   
+}
+
+// CleverTapURLDelegate method
+- (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
+    NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
+    return YES;
 }
 
 //Device Token
