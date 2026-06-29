@@ -33,6 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import com.clevertap.react.CleverTapApplication;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
+import com.reactnativeintegration.CTCachePackage;   // <-- add import
 
 
 public class MainApplication extends CleverTapApplication implements ActivityLifecycleCallbacks, ReactApplication {
@@ -49,6 +50,7 @@ public class MainApplication extends CleverTapApplication implements ActivityLif
                     List<ReactPackage> packages = new PackageList(this).getPackages();
                     packages.add(new CTModulePackage());
                     packages.add(new RNCMaskedViewPackage());
+                    packages.add(new CTCachePackage());
                     return packages;
                 }
 

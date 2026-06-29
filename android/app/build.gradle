@@ -206,8 +206,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation project(':clevertap-react-native')
-    // implementation 'com.clevertap.android:clevertap-android-sdk:4.6.6'
-    implementation 'com.clevertap.android:clevertap-android-sdk:6.2.1'
+    // implementation 'com.clevertap.android:clevertap-android-sdk:6.2.1'
     implementation 'com.google.android.gms:play-services-base:17.6.0'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
     // implementation 'com.google.android.exoplayer:exoplayer:2.8.4'

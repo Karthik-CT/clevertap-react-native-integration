@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import {
   View,
   TextInput,
@@ -9,10 +9,20 @@ import {
 } from 'react-native';
 
 const CleverTap = require('clevertap-react-native');
+import {ensureCleverTapLogin} from './ctLogin';
+
+import {NativeModules} from 'react-native';
+console.log('[CTLogin] CTCache module present?', !!NativeModules.CTCache);
 
 const Login = ({navigation}) => {
+  console.log('[CTLogin] Login screen RENDERED');
   CleverTap.setDebugLevel(3);
   CleverTap.initializeInbox();
+
+  useEffect(() => {
+    console.log('[CTLogin] useEffect fired, about to call ensureCleverTapLogin');
+    // ensureCleverTapLogin('okwreact3');   // async, but we don't need to await here
+  }, []);
 
   const [inputValues, setInputValues] = useState({
     name: '',
@@ -131,7 +141,7 @@ const Login = ({navigation}) => {
         textColor="#000"
       />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Loginn</Text>
       </TouchableOpacity>
     </View>
   );
