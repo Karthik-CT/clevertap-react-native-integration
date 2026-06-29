@@ -13,7 +13,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  
+  [self printUserDefaults];
+  // code to clear user defaults
+  [self clearCleverTapUserDefaults];
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"ReactNativeIntegration"
@@ -74,8 +76,8 @@
 
 // CleverTapURLDelegate method
 - (BOOL)shouldHandleCleverTapURL:(NSURL *)url forChannel:(CleverTapChannel)channel {
-    NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
-    return YES;
+  NSLog(@"Handling URL: \(%@) for channel: \(%d)", url, channel);
+  return YES;
 }
 
 //Device Token
@@ -120,6 +122,46 @@
 }
 -(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
   completionHandler(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound);
+}
+
+- (void)printUserDefaults {
+  NSLog(@"Printing user defaults started");
+  NSDictionary *dictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+  
+  for (NSString *key in dictionary) {
+    id value = dictionary[key];
+    NSLog(@"UserDefault: %@: %@", key, value);
+  }
+  
+  NSLog(@"Printing user defaults completed");
+}
+
+- (void)clearCleverTapUserDefaults {
+  
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  
+  NSLog(@"Cleanup Started");
+  
+  NSDictionary *allDefaults = [defaults dictionaryRepresentation];
+  NSUInteger removedCount = 0;
+  
+  for (NSString *key in allDefaults.allKeys) {
+    
+    NSString *lowercaseKey = [key lowercaseString];
+    
+    if ([lowercaseKey containsString:@"clevertap"] ||
+        [lowercaseKey containsString:@"wizrocket"] ||
+        [lowercaseKey containsString:@"wzrk"]) {
+      
+      NSLog(@"Removing UserDefaults key: %@", key);
+      [defaults removeObjectForKey:key];
+      removedCount++;
+    }
+  }
+  
+  [defaults synchronize];
+  
+  NSLog(@"Cleanup Completed");
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

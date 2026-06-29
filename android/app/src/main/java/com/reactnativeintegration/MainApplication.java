@@ -34,7 +34,8 @@ import java.util.HashMap;
 import com.clevertap.react.CleverTapApplication;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 import com.reactnativeintegration.CTCachePackage;   // <-- add import
-
+import android.util.Log;
+import android.content.SharedPreferences;
 
 public class MainApplication extends CleverTapApplication implements ActivityLifecycleCallbacks, ReactApplication {
 
@@ -69,6 +70,11 @@ public class MainApplication extends CleverTapApplication implements ActivityLif
 
     @Override
     public void onCreate() {
+        Log.d("Clearing Shared Preferences started","Clearing Shared Preferences started");
+        SharedPreferences prefs = getSharedPreferences("WizRocket", MODE_PRIVATE);
+        prefs.edit().clear().commit();
+        Log.d("Clearing Shared Preferences completed","Clearing Shared Preferences completed");
+        
         ActivityLifecycleCallback.register(this);
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
