@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   TextInput,
@@ -20,7 +20,9 @@ const Login = ({navigation}) => {
   CleverTap.initializeInbox();
 
   useEffect(() => {
-    console.log('[CTLogin] useEffect fired, about to call ensureCleverTapLogin');
+    console.log(
+      '[CTLogin] useEffect fired, about to call ensureCleverTapLogin',
+    );
     // ensureCleverTapLogin('okwreact3');   // async, but we don't need to await here
   }, []);
 

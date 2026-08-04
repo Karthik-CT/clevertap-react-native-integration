@@ -11,6 +11,7 @@ import WebView from './WebView';
 import ProdExp from './ProdExp';
 import GeoFence from './GeoFence';
 import Login from './Login';
+import SimTrackerScreen from './SimTrackerScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ const linking = {
       ProdExp: 'prodexppage',
       Profile: 'mainpage',
       Login: 'loginpage',
+      SimTrackerScreen: 'simtrackerscreen',
     },
   },
 };
@@ -94,6 +96,11 @@ const App = () => {
           name="Login"
           component={Login}
           options={{title: 'Login'}}
+        />
+        <Stack.Screen
+          name="SimTrackerScreen"
+          component={SimTrackerScreen}
+          options={{title: 'SimTrackerScreen'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

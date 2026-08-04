@@ -394,8 +394,18 @@ class Home extends Component {
                 </View>
                 <View style={styles.buttonWrapper}>
                   <Button
-                    title="Profile"
+                    title="Profilee"
                     onPress={() => this.props.navigation.navigate('Profile')}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.buttonWrapper}>
+                  <Button
+                    title="SimTrackerScreen"
+                    onPress={() =>
+                      this.props.navigation.navigate('SimTrackerScreen')
+                    }
                   />
                 </View>
               </View>
