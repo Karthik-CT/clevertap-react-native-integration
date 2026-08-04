@@ -18,6 +18,7 @@ import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSimTracker} from './src/hooks/useSimTracker';
 import SimCardItem from './src/components/SimCardItem';
 import {IS_POC_MODE} from './src/config/OperatorConfig';
+import {SimDebugConfig} from './src/config/SimDebugConfig';
 
 export default function SimTrackerScreen() {
   const {classifications, statusMessage, isLoading, loadAndTrackSims} =
@@ -44,6 +45,20 @@ export default function SimTrackerScreen() {
         <Text style={styles.headerTitle}>SIM Tracker — CleverTap POC</Text>
         <Text style={styles.headerSubtitle}>{modeLabel}</Text>
       </View>
+
+      {/* DEBUG banner — visible ONLY when SimDebugConfig.enabled is true.
+          If you can see this red bar, the debug override IS compiled in and
+          running. If roaming still doesn't show, the problem is elsewhere.
+          If you CANNOT see this bar but expect to, your SimReader.js /
+          SimDebugConfig.js is not the updated version (or Metro is cached). */}
+      {SimDebugConfig?.enabled && (
+        <View style={styles.debugBanner}>
+          <Text style={styles.debugBannerText}>
+            ⚠ DEBUG SIM OVERRIDES ACTIVE — forcing roaming on slot(s){' '}
+            {(SimDebugConfig.forceRoamingSlots || []).join(', ') || 'none'}
+          </Text>
+        </View>
+      )}
 
       {/* Progress indicator */}
       {isLoading && (
@@ -115,6 +130,16 @@ const styles = StyleSheet.create({
     color: '#E3F2FD',
     fontSize: 12,
     marginTop: 4,
+  },
+  debugBanner: {
+    backgroundColor: '#E53935',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  debugBannerText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '700',
   },
   progressBar: {
     height: 4,

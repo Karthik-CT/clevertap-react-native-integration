@@ -14,19 +14,18 @@
 // Install: npm install react-native-sim-cards-manager
 //          cd ios && pod install
 //
-// ─── FIELD-NAME NOTE (this is what was broken) ────────────────────────────────
+// ─── FIELD-NAME NOTE ──────────────────────────────────────────────────────────
 // The library returns these Android keys per SIM:
 //   carrierName, displayName, isoCountryCode, mobileCountryCode,
 //   mobileNetworkCode, isNetworkRoaming, isDataRoaming, simSlotIndex,
 //   phoneNumber, simSerialNumber, subscriptionId
 // It does NOT return `mcc`, `mnc`, `countryCode`, or `simState`.
-// The previous port read those non-existent keys, so mccMnc/countryIso came
-// back empty (→ "N/A") and isActive was always false (→ everything "OTHER").
 // getSimCardsNative() is backed by SubscriptionManager.getActiveSubscriptionInfoList(),
 // so every entry it returns is already an ACTIVE subscription.
 
 import SimCardsManager from 'react-native-sim-cards-manager';
 import {PermissionsAndroid, Platform} from 'react-native';
+import {applySimDebugOverrides} from '../config/SimDebugConfig';
 
 // Hardcoded strings — never goes through PermissionsAndroid.PERMISSIONS
 // which can return null on certain RN versions.
@@ -34,8 +33,6 @@ const PERM_PHONE_STATE = 'android.permission.READ_PHONE_STATE';
 const PERM_PHONE_NUMBERS = 'android.permission.READ_PHONE_NUMBERS'; // required Android 11+
 
 // ─── Permission request ───────────────────────────────────────────────────────
-// We handle permissions ourselves so we never touch the library's broken
-// internal permission flow that causes the null crash.
 
 export async function requestPhonePermission() {
   if (Platform.OS !== 'android') {
@@ -43,13 +40,11 @@ export async function requestPhonePermission() {
   }
 
   try {
-    // Build the list of permissions we need based on API level
     const needed =
       Platform.Version >= 30
         ? [PERM_PHONE_STATE, PERM_PHONE_NUMBERS]
         : [PERM_PHONE_STATE];
 
-    // Check which ones still need to be requested
     const toRequest = [];
     for (const perm of needed) {
       const alreadyGranted = await PermissionsAndroid.check(perm);
@@ -58,12 +53,10 @@ export async function requestPhonePermission() {
       }
     }
 
-    // All already granted
     if (toRequest.length === 0) {
       return true;
     }
 
-    // requestMultiple works for both 1 and 2 permissions
     const results = await PermissionsAndroid.requestMultiple(toRequest);
 
     return Object.values(results).every(
@@ -78,50 +71,50 @@ export async function requestPhonePermission() {
 // ─── Main read function ───────────────────────────────────────────────────────
 
 export async function readSims() {
-  if (Platform.OS !== 'android') {
-    // iOS does not expose SIM slot details
-    return [];
-  }
+  let realSims = [];
 
-  const granted = await requestPhonePermission();
-  if (!granted) {
-    console.warn('[SimReader] Permission not granted');
-    return [];
-  }
+  if (Platform.OS === 'android') {
+    const granted = await requestPhonePermission();
+    if (granted) {
+      try {
+        // getSimCardsNative() does NOT handle permissions internally — it
+        // goes straight to the native SubscriptionManager call, which is fine
+        // because we already handled permissions above ourselves.
+        const cards = await SimCardsManager.getSimCardsNative();
 
-  try {
-    // getSimCardsNative() does NOT handle permissions internally — it
-    // goes straight to the native SubscriptionManager call. This is what
-    // we want since we have already handled permissions above ourselves.
-    const cards = await SimCardsManager.getSimCardsNative();
+        // Uncomment to verify raw field names on a real device:
+        // console.log('[SimReader] raw cards:', JSON.stringify(cards, null, 2));
 
-    if (!cards || cards.length === 0) {
-      return [];
+        if (cards && cards.length > 0) {
+          realSims = cards
+            .sort((a, b) => (a.simSlotIndex ?? 0) - (b.simSlotIndex ?? 0))
+            .map((card, index) => buildSimInfo(card, index));
+        }
+      } catch (error) {
+        console.warn('[SimReader] Failed to read SIM cards:', error);
+      }
+    } else {
+      console.warn('[SimReader] Permission not granted');
     }
-
-    // Helpful when verifying field names on a real device:
-    // console.log('[SimReader] raw cards:', JSON.stringify(cards, null, 2));
-
-    return cards
-      .sort((a, b) => (a.simSlotIndex ?? 0) - (b.simSlotIndex ?? 0))
-      .map((card, index) => buildSimInfo(card, index));
-  } catch (error) {
-    console.warn('[SimReader] Failed to read SIM cards:', error);
-    return [];
   }
+  // iOS does not expose SIM slot details, so realSims stays empty there.
+
+  // Apply test-only overrides. This is a no-op unless SimDebugConfig.enabled
+  // is true, so it is safe to leave in place. When enabled it can force
+  // roaming, patch fields, or inject synthetic SIMs (even on an emulator /
+  // iOS with no physical SIM).
+  return applySimDebugOverrides(realSims);
 }
 
 // ─── Builder ──────────────────────────────────────────────────────────────────
 
 function buildSimInfo(card, fallbackIndex) {
   // The library uses mobileCountryCode / mobileNetworkCode / isoCountryCode.
-  // We keep `card.mcc` / `card.mnc` / `card.countryCode` as *fallbacks* only,
-  // in case a future library version or a custom native fork exposes them.
+  // Keep mcc / mnc / countryCode as fallbacks only, for other library forks.
   const mcc = String(card.mobileCountryCode ?? card.mcc ?? '').trim();
   const mnc = String(card.mobileNetworkCode ?? card.mnc ?? '').trim();
 
-  // Pad MNC to at least 2 digits to match standard MCC+MNC format
-  // (SubscriptionInfo.getMnc() can drop a leading zero, e.g. 05 -> 5).
+  // Pad MNC to at least 2 digits (getMnc() can drop a leading zero, 05 -> 5).
   const paddedMnc = mnc.length === 1 ? mnc.padStart(2, '0') : mnc;
   const mccMnc = mcc && mnc ? `${mcc}${paddedMnc}` : '';
 
@@ -133,11 +126,7 @@ function buildSimInfo(card, fallbackIndex) {
       .toLowerCase()
       .trim(),
     isRoaming: Boolean(card.isNetworkRoaming ?? false),
-    // getSimCardsNative() returns only active subscriptions
-    // (SubscriptionManager.getActiveSubscriptionInfoList()), and the library
-    // exposes no sim-state field. So every returned entry is active by
-    // definition. The old `simState === 5` check read a non-existent key,
-    // making this false for every SIM and forcing every role to OTHER.
+    // Every entry from getSimCardsNative() is an active subscription.
     isActive: true,
   };
 }
