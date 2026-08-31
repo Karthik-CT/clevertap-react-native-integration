@@ -80,6 +80,9 @@ import com.android.build.OutputFile
 project.ext.react = [
     entryFile: "index.js",
     enableHermes: false,  // clean and rebuild if changing
+    // Metro's transform cache uses the md4 hash, which Node 17+'s default
+    // OpenSSL 3 provider no longer supports; fall back to the legacy provider.
+    nodeExecutableAndArgs: ["node", "--openssl-legacy-provider"],
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -129,15 +132,13 @@ def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitect
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    // compileSdkVersion rootProject.ext.compileSdkVersion
     namespace "com.reactnativeintegration"
-    compileSdkVersion 35
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "com.reactnativeintegration"
         minSdkVersion rootProject.ext.minSdkVersion
-        // targetSdkVersion rootProject.ext.targetSdkVersion
-        targetSdkVersion 35
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -260,3 +261,36 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+// react.gradle's copy<Variant>BundledJs task is a plain Copy task whose
+// destination is declared as the whole build/intermediates dir (via a
+// wrapping into("$buildDir/intermediates") { ... }), so AGP 8's "implicit
+// dependency" validation treats it as conflicting with every other task
+// that touches anything under intermediates/ (manifest merging, resource
+// parsing, dex merging, ...) and fails the build. Rather than chase every
+// AGP task that happens to trip this, force every task that isn't one of
+// copyBundledJs's own dependencies to run after it.
+afterEvaluate {
+    android.applicationVariants.all { variant ->
+        def variantName = variant.name.capitalize()
+        def copyBundledJsTask = tasks.findByName("copy${variantName}BundledJs")
+        if (copyBundledJsTask == null) {
+            return
+        }
+
+        def ancestors = new HashSet()
+        def stack = [copyBundledJsTask]
+        while (!stack.isEmpty()) {
+            def current = stack.remove(stack.size() - 1)
+            current.taskDependencies.getDependencies(current).each { dep ->
+                if (ancestors.add(dep)) {
+                    stack.add(dep)
+                }
+            }
+        }
+
+        tasks.matching { it != copyBundledJsTask && !ancestors.contains(it) }.configureEach { t ->
+            t.mustRunAfter(copyBundledJsTask)
+        }
+    }
+}

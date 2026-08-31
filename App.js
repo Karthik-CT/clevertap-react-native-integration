@@ -75,7 +75,7 @@ const App = () => {
         <Stack.Screen
           name="CustomAppInbox"
           component={CustomAppInbox}
-          options={{title: 'CustomAppInbox'}}
+          options={{title: 'CustomAppInbox', headerShown: false}}
         />
         <Stack.Screen
           name="WebView"
