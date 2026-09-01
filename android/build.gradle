@@ -2,22 +2,52 @@
 
 buildscript {
     ext {
-        // buildToolsVersion = "30.0.2"
-        buildToolsVersion = "33.0.0"
+        buildToolsVersion = "36.0.0"
         minSdkVersion = 23
-        compileSdkVersion = 31
-        targetSdkVersion = 30
-        ndkVersion = "21.4.7075529"
+        compileSdkVersion = 36
+        targetSdkVersion = 36
+        ndkVersion = "27.1.12297006"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath('com.android.tools.build:gradle:8.1.2')
+        classpath('com.android.tools.build:gradle:8.7.3')
         classpath 'com.google.gms:google-services:4.4.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+}
+
+// AGP 8+ requires every Android library module to declare a namespace, but
+// a few older native modules (predating that requirement) only set the
+// package via their AndroidManifest.xml. Backfill it here rather than
+// patching node_modules, since those files get overwritten on every install.
+def namespaceOverrides = [
+    'react-native-firebase_app'   : 'io.invertase.firebase',
+    'react-native-webview'        : 'com.reactnativecommunity.webview',
+    'react-native-gesture-handler': 'com.swmansion.gesturehandler',
+    'react-native-sim-cards-manager': 'com.reactnativesimcardsmanager',
+    'react-native-screens'         : 'com.swmansion.rnscreens',
+    'react-native-safe-area-context': 'com.th3rdwave.safeareacontext',
+]
+
+subprojects { subproject ->
+    def override = namespaceOverrides[subproject.name]
+    if (override != null) {
+        subproject.afterEvaluate { proj ->
+            if (proj.hasProperty('android') && proj.android.namespace == null) {
+                proj.android.namespace = override
+            }
+        }
+    }
+
+    // Everything in this project compiles Java to 1.8; the installed JDK
+    // defaults Kotlin's target much higher, which Kotlin refuses to mix
+    // with a javac target of 1.8. Pin Kotlin to match.
+    subproject.tasks.matching { it.name.matches(/compile(Debug|Release)Kotlin/) }.configureEach { task ->
+        task.kotlinOptions.jvmTarget = "1.8"
     }
 }
 

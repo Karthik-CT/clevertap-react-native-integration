@@ -21,6 +21,8 @@ const Separator = () => <View style={styles.separator} />;
 
 let cleverTapInstance = null;
 
+CleverTap.recordEvent('kkapievent');
+
 Linking.addEventListener('url', e => {
   console.log('Deeplink inside app: ' + e.url);
   handleDeepLink(e.url);
@@ -394,8 +396,18 @@ class Home extends Component {
                 </View>
                 <View style={styles.buttonWrapper}>
                   <Button
-                    title="Profile"
+                    title="Profilee"
                     onPress={() => this.props.navigation.navigate('Profile')}
+                  />
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.buttonWrapper}>
+                  <Button
+                    title="SimTrackerScreen"
+                    onPress={() =>
+                      this.props.navigation.navigate('SimTrackerScreen')
+                    }
                   />
                 </View>
               </View>

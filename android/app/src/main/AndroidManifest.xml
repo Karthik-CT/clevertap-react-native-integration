@@ -3,6 +3,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
 
     <application
         android:name=".MainApplication"
@@ -45,6 +47,13 @@
         <meta-data
             android:name="CLEVERTAP_TOKEN"
             android:value="TEST-206-0b0" />
+
+        <!-- <meta-data
+            android:name="CLEVERTAP_ACCOUNT_ID"
+            android:value="TEST-R9Z-86K-Z57Z" />
+        <meta-data
+            android:name="CLEVERTAP_TOKEN"
+            android:value="TEST-36b-1c2" /> -->
 
         <!-- <meta-data
            android:name="CLEVERTAP_IDENTIFIER"
