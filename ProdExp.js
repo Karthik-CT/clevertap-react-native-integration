@@ -106,9 +106,6 @@ const ProdExp = () => {
   const formatValue = value =>
     typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);
 
-  // Flattens variable groups (e.g. `test: {enabled, screen, url}`) into
-  // dot-path leaves so each one gets its own card, matching how the
-  // dashboard lists group children as separate rows under the group name.
   const flattenVariables = (obj, prefix = '') =>
     Object.entries(obj).reduce((acc, [key, value]) => {
       const path = prefix ? `${prefix}.${key}` : key;
