@@ -21,7 +21,7 @@ const Separator = () => <View style={styles.separator} />;
 
 let cleverTapInstance = null;
 
-CleverTap.recordEvent('kkapievent');
+// CleverTap.recordEvent('kkapievent');
 
 Linking.addEventListener('url', e => {
   console.log('Deeplink inside app: ' + e.url);
