@@ -349,6 +349,7 @@ export default function CustomAppInbox() {
       }
       setLoading(false);
       setRefreshing(false);
+      console.log('custom App Inbox getAllInboxMessages: ', res);
     });
   }, []);
 

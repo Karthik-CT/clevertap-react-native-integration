@@ -5,8 +5,8 @@ import CleverTap from 'clevertap-react-native';
 // ooredoo tunisia implementation starts here
 let variables = {
   test: {
-    enabled: true,
-    screen: 'InternetCampaignScreen',
+    enabled: false,
+    screen: '',
     url: '',
   },
 };
